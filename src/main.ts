@@ -2,6 +2,8 @@ import server from './server';
 import UserRoutes from './controller/routes/user-routes';
 import mongoProvider from './provider/mongo-client';
 
+
+
 if (process.env.NODE_ENV !== 'production') {
     const dotenv = require('dotenv');
     dotenv.config();
@@ -11,6 +13,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 (function() {
+
     const database = mongoProvider();
     server.use('/api', UserRoutes(database));
     server.listen(process.env.API_PORT, () => {
