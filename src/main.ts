@@ -1,5 +1,6 @@
 import server from './server';
 import UserRoutes from './controller/routes/user-routes';
+import RoleRoutes from './controller/routes/role-routes';
 import mongoProvider from './provider/mongo-client';
 import { DatabaseFactory } from './provider/database-factory';
 import { MongoClient } from 'mongodb';
@@ -27,6 +28,7 @@ if (process.env.NODE_ENV !== 'production') {
     const database = mongoProvider(db);
 
     server.use('/api', UserRoutes(database.userQueries));
+    server.use('/api', RoleRoutes(database.roleQueries))
     server.listen(process.env.API_PORT, () => {
         /* eslint-disable no-console */
         console.info(`Server is running on port ${process.env.API_PORT}`);

@@ -1,5 +1,6 @@
 import { ObjectId } from 'mongodb';
-import { RemoveType, UserModel } from './user-model';
+import { UserModel } from './user-model';
+import { RemoveType } from './common/remove-type';
 
 
 export interface UserWrapper {

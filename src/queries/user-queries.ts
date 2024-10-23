@@ -1,6 +1,7 @@
 import { UserWrapper } from '../data/interfaces/user-wrapper';
 import { Db, ObjectId } from 'mongodb';
-import { RemoveType, UserModel } from '../data/interfaces/user-model';
+import { UserModel } from '../data/interfaces/user-model';
+import { RemoveType } from '../data/interfaces/common/remove-type';
 
 // delete(id: string): UserModel;
 const UserQueries = (db: Db): UserWrapper  => {
