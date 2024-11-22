@@ -1,7 +1,7 @@
 export interface SiteConfiguration{
-    Title: String, 
-    Language: String, 
-    Author: String, 
-    Email: String, 
-    Types: String, 
+    Title: string, 
+    Language: string, 
+    Author: string, 
+    Email: string, 
+    Types: string, 
 }
