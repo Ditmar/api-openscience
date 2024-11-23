@@ -1,7 +1,7 @@
 import express from 'express';
 import { UserWrapper } from '../../data/interfaces/user-wrapper';
 import {schemaValidationMiddleware} from '../../middlewares/schemaValidator.middleware';
-import {userWrapperPostSchema, userWrapperPutSchema} from '../../schemmas/users.schema'
+import {userWrapperPostSchema, userWrapperPutSchema} from '../../schemas/users.schema'
 
 const UserRoutes = (database: UserWrapper) => {
     const userRoutes = express.Router();
