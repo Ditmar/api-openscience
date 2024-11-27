@@ -1,30 +1,35 @@
 import express from 'express';
-//import { uploadMiddleware } from '../../middlewares/multer.middleware';
+import { StatusCodes } from 'http-status-codes';
+import { uploadMiddleware } from '../../middlewares/multer.middleware';
+import { createDataURL } from '../../utils/createUrl';
+import { MAX_FILE_SIZE } from '../../utils/constants';
 const ImageRouter = () => {
-    const imageRouter = express.Router();
-    //const uploader = uploadMiddleware(1024 * 1024 * 8); // 8MB
-    imageRouter.get('/bucket', (req, res) => {
-        res.status(200).json({ message: 'GET /bucket' });
-        
+    const router = express.Router();
+
+    const uploader = uploadMiddleware(MAX_FILE_SIZE); // 8MB
+    router.get('/upload', (req, res) => {
+        res.status(StatusCodes.OK).json({ message: 'GET /bucket' });
     });
 
-    imageRouter.post(
-        '/bucket',
-        //uploader.single('image'), // Middleware para manejar la imagen
+    router.post(
+        '/upload',
+        uploader.single('image'),
         (req, res) => {
-            //console.log(req.file);
-
             if (!req.file) {
-                return res.status(400).json({ error: 'No se subió ninguna imagen.' });
+                return res.status(StatusCodes.BAD_REQUEST).json({ 
+                    error: 'No image has been uploaded.' 
+                });
             }
+            const url = createDataURL(req.file);
 
-            res.status(201).json({
-                message: 'Imagen cargada exitosamente.',
+            res.status(StatusCodes.CREATED).json({
+                message: 'Image uploaded successfully.',
                 filePath: `/uploads/${req.file.filename}`,
+                url,
             });
         }
     );
-    return imageRouter;
+    return router;
 }
 
 export default ImageRouter;
