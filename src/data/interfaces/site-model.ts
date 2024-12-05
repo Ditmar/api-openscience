@@ -3,5 +3,5 @@ export interface SiteModel{
     Language: string, 
     Author: string, 
     Email: string, 
-    Types: string, 
+    Types: string,
 }
