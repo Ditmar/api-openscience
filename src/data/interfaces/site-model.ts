@@ -1,4 +1,4 @@
-export interface SiteConfiguration{
+export interface SiteModel{
     Title: string, 
     Language: string, 
     Author: string, 
