@@ -103,4 +103,4 @@ curl -X DELETE http://localhost:3000/users-management/<USER_ID>
 ### **Notes**
 - Replace `http://localhost:3000` with your server's base URL if it is different.
 - Make sure the server is running before making requests. 
-- Some endpoints may require authentication depending on your system rules
+- Some endpoints may require authentication depending on your system rules.
