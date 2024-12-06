@@ -8,7 +8,6 @@ const UserManagementRoutes = (database: UserWrapper) => {
     const userManagementRoutes = express.Router();
     userManagementRoutes.get('/users-management', async (req, res) => {
         try {
-            //const userList = await database.find();
             let limitData: number | null;
             let { limit }= req.query;
             limitData = limit? Number.parseInt(limit as string) : null;
