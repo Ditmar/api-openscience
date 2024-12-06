@@ -2,7 +2,7 @@ import server from './server';
 import UserRoutes from './controller/routes/user-routes';
 import { SEORoutes } from './controller/routes/seo-controller';
 import RoleRoutes from './controller/routes/role-routes';
-import VolumeRoutes from './controller/routes/media-routes';
+import VolumeRoutes from './controller/routes/volume-routes';
 import mongoProvider from './provider/mongo-client';
 import { DatabaseFactory } from './provider/database-factory';
 import { MongoClient } from 'mongodb';
@@ -32,6 +32,7 @@ if (process.env.NODE_ENV !== 'production') {
 
     server.use('/api', UserRoutes(database.userQueries));
     server.use('/api', RoleRoutes(database.roleQueries));
+    server.use('/api', VolumeRoutes(database.volumeQueries));
     server.use('/api', ImageRouter());
     server.use('/api', SEORoutes(database.seoQueries));
     server.listen(process.env.API_PORT, () => {
