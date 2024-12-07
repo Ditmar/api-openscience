@@ -6,6 +6,7 @@ import VolumeRoutes from './controller/routes/media-routes';
 import mongoProvider from './provider/mongo-client';
 import { DatabaseFactory } from './provider/database-factory';
 import { MongoClient } from 'mongodb';
+import UserManagementRoutes from './controller/routes/userManagement-routes';
 import ImageRouter from './controller/routes/images-routes';
 
 if (process.env.NODE_ENV !== 'production') {
@@ -34,6 +35,7 @@ if (process.env.NODE_ENV !== 'production') {
     server.use('/api', RoleRoutes(database.roleQueries));
     server.use('/api', ImageRouter());
     server.use('/api', SEORoutes(database.seoQueries));
+    server.use('/api', UserManagementRoutes(database.userManagementQueries));
     server.listen(process.env.API_PORT, () => {
         /* eslint-disable no-console */
         console.info(`Server is running on port ${process.env.API_PORT}`);
