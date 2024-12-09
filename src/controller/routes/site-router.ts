@@ -1,32 +1,64 @@
 import express from 'express';
 import { SiteWrapper } from '../../data/interfaces/site-wrapper';
-import { validateSite } from '../../middlewares/validateSite'
+import { StatusCodes } from 'http-status-codes';
 
-export const SiteRoutes = (database: SiteWrapper) => {
+const SiteRoutes = (database: SiteWrapper) => {
     const siteRoutes = express.Router();
-    siteRoutes.get('/site', async (req, res) => {
-        const siteList = await database.find();
-        res.status(201).json({ siteList });
-    });
-    siteRoutes.post('/site', validateSite, async (req, res) => {
-        const site = await database.create(req.body);
-        res.status(201).json({ site });
-    });
     siteRoutes.get('/site/:id', async (req, res) => {
-        const site = await database.findById(req.params.id);
-        if(!site) return res.status(404).json({ message: 'Not Found' });        
-        res.status(200).json({ site });
-    });
-    siteRoutes.put('/site/:id',validateSite, async (req, res) => {
-        const site = await database.update(req.body, req.params.id);
-        res.status(200).json({ site });
-    });
+        try {
+            const site = await database.findById(req.params.id);
+            if (!site) {
+                return res.status(StatusCodes.CREATED).json({ message: 'Not found' });
+            }
+            return res.status(StatusCodes.CREATED).json({site});
+        } catch (error) {
+            return res.status(StatusCodes.CREATED).json({ error: error });
+        }
+    })
+    siteRoutes.get('/site', async (req, res) => {
+        try {
+            const siteList = await database.find();
+            if (!siteList) {
+                return res.status(StatusCodes.CREATED).json({ message: 'Not found' });
+            }
+            return res.status(StatusCodes.CREATED).json({ siteList });
+        } catch (error) {
+            return res.status(StatusCodes.CREATED).json({ error: error });
+        }
+    })
+    siteRoutes.post('/site', async (req, res) => {
+        try {
+            const site = await database.create(req.body);
+            if (!site) {
+                return res.status(StatusCodes.CREATED).json({ message: 'Site not created' });
+            }
+            return res.status(StatusCodes.CREATED).json({site});
+        } catch (error) {
+            return res.status(StatusCodes.CREATED).json({ error: error });
+        }
+    })
+    siteRoutes.put('site/:id', async (req, res) => {
+        try {
+            const site = await database.update(req.body, req.params.id);
+            if (!site) {
+                return res.status(StatusCodes.CREATED).json({ message: 'Not updated' });
+            }
+            return res.status(StatusCodes.CREATED).json({site});
+        } catch (error) {
+            return res.status(StatusCodes.CREATED).json({ error: error });
+        }
+    })
     siteRoutes.delete('/site/:id', async (req, res) => {
-        const site = await database.remove(req.params.id);
-
-        if(site.deletedCount === 0) return res.status(404).json({ message: 'Not Found' });
-        res.status(200).json({ site});
-    });
+        try {
+            const site = await database.remove(req.params.id);
+            if (!site) {
+                return res.status(StatusCodes.CREATED).json({ message: 'Site not deleted' });
+            }
+            return res.status(StatusCodes.CREATED).json({site});
+        } catch (error) {
+            return res.status(StatusCodes.CREATED).json({ error: error });
+        }
+    })
 
     return siteRoutes;
 }
